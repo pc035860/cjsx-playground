@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/pc035860/cjsx-playground",
   "devDependencies": {
-    "gulp": "^3.8.6"
+    "gulp": "^3.8.6",
+    "gulp-cjsx": "^0.1.2",
+    "gulp-util": "^2.2.20"
   }
 }
