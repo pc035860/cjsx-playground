@@ -2,6 +2,7 @@ var gulp = require('gulp'),
     gutil = require('gulp-util');
 
 var cjsx = require('gulp-cjsx'),
+    rename = require('gulp-rename'),
     connect = require('gulp-connect'),
     livereload = require('gulp-livereload');
 
@@ -24,6 +25,7 @@ gulp.task('server', function () {
 gulp.task('cjsx', function () {
   gulp.src(config.watch.cjsx, {base: './'})
     .pipe(cjsx({bare: true}).on('error', gutil.log))
+    .pipe(rename({suffix: '.cjsx'}))
     .pipe(gulp.dest('./'));
 });
 
