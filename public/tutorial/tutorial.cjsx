@@ -25,27 +25,21 @@ CommentBox = React.createClass
     # setInterval @loadCommentsFromServer, @props.pollInterval
 
   render : ->
-    return (
-      <div className="commentBox">
-        <h1>Comments</h1>
-        <CommentList data={@state.data} />
-        <CommentForm onCommentSubmit={@handleCommentSubmit} />
-      </div>
-    )
+    <div className="commentBox">
+      <h1>Comments</h1>
+      <CommentList data={@state.data} />
+      <CommentForm onCommentSubmit={@handleCommentSubmit} />
+    </div>
 
 CommentList = React.createClass
   render : ->
-    commentNodes = ((
-      <Comment author={comment.author}>
-        {comment.text}
-      </Comment>
-    ) for comment in @props.data)
-
-    return (
-      <div className="commentList">
-        {commentNodes}
-      </div>
-    )
+    <div className="commentList">
+      {for comment in @props.data
+        <Comment author={comment.author}>
+          {comment.text}
+        </Comment>
+      }
+    </div>
 
 CommentForm = React.createClass
   handleSubmit : ->
@@ -63,25 +57,23 @@ CommentForm = React.createClass
     return false
 
   render : ->
-    return (
-      <form className="commentForm" onSubmit={@handleSubmit}>
-        <input type="text" placeholder="Your name" ref="author" />
-        <input type="text" placeholder="Say something..." ref="text" />
-        <input type="submit" value="Post" />
-      </form>
-    )
+    <form className="commentForm" onSubmit={@handleSubmit}>
+      <input type="text" placeholder="Your name" ref="author" />
+      <input type="text" placeholder="Say something..." ref="text" />
+      <input type="submit" value="Post" />
+    </form>
 
 converter = new Showdown.converter()
 Comment = React.createClass
   render : ->
     rawMarkup = converter.makeHtml @props.children.toString()
-    return (
-      <div className="comment">
-        <h2 className="commentAuthor">
-          {@props.author}
-        </h2>
-        <span dangerouslySetInnerHTML={{__html : rawMarkup}} />
-      </div>
-    )
 
-React.renderComponent <CommentBox url="comments.json" pollInterval={2000} />, ($ '#content')[0]
+    <div className="comment">
+      <h2 className="commentAuthor">
+        {@props.author}
+      </h2>
+      <span dangerouslySetInnerHTML={{__html : rawMarkup}} />
+    </div>
+
+React.renderComponent <CommentBox url="comments.json" pollInterval={2000} />,
+  ($ '#content')[0]
